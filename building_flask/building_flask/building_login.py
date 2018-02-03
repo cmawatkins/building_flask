@@ -1,4 +1,4 @@
-# Title: building_functions.py
+# Title: building_login.py
 #
 # Author: Troy <twc17@pitt.edu>
 # Date Modified: 02/03/2018
@@ -98,6 +98,30 @@ def write_log(entry, log_file):
     log_file.write(now + " " + entry + "\n")
     log_file.close()
 
+def sort_log(db):
+    building_log = []
+
+    for key, value in db.iteritems():
+        user_line = key + "," + ",".join(value)
+        building_log.append(user_line)
+
+    # Sort list based on date/time stamp
+    building_log.sort(key = lambda x: str(x.split(',')[3][-20:]))
+
+    return building_log
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
+    # Handle GET requests
+    if request.method == 'GET':
+        # Print out the current building log
+        # Have a 'hidden' input field for card swipe
+        # return index page
+
+    # Handle POST requests
+    elif request.method == 'POST':
+        # Validate and process the users input
+        # Either log user in, out, or add guest
+        # if guest: return guest_login page
+        # if pitt_employee: add or remove from log and return index
