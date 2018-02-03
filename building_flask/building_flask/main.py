@@ -126,3 +126,7 @@ def index():
         # Either log user in, out, or add guest
         # if guest: return guest_login page
         # if pitt_employee: add or remove from log and return index
+        pass
+
+if __name__ == "__main__":
+    app.run()
