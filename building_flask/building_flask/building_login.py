@@ -116,8 +116,9 @@ def index():
     # Handle GET requests
     if request.method == 'GET':
         # Print out the current building log
-        # Have a 'hidden' input field for card swipe
+        # Have a 'hidden' input field for card swipe (this will be in the HTML file)
         # return index page
+        return render_template("index.html", title=title, db=db)
 
     # Handle POST requests
     elif request.method == 'POST':
