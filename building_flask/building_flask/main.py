@@ -97,7 +97,7 @@ def write_log(entry, log_file):
 def sort_log(db):
     building_log = []
 
-    for key, value in db.iteritems():
+    for key, value in db.items():
         user_line = key + "," + ",".join(value)
         building_log.append(user_line)
 
@@ -142,7 +142,8 @@ def index():
         # Print out the current building log
         # Have a 'hidden' input field for card swipe (this will be in the HTML file)
         # return index page
-        return render_template("index.html", title=title, db=db)
+        building_log = sort_log(db)
+        return render_template("index.html", title=title, building_log=building_log)
 
     # Handle POST requests
     elif request.method == 'POST':
@@ -153,8 +154,8 @@ def index():
         if request.form['user_input'] == '':
             return redirect(url_for('guest'))
         else:
-            flash(request.form['user_login'])
-            return render_template("index.html", title=title, db=db)
+            building_log = sort_log(db)
+            return render_template("index.html", title=title, building_log=building_log)
 
 if __name__ == "__main__":
     app.run()
