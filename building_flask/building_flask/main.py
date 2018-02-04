@@ -12,6 +12,7 @@
 
 # Import libs
 from flask import Flask, request, render_template, redirect, url_for
+import xml.etree.ElementTree as etree
 import os
 import socket
 import sys
@@ -162,6 +163,8 @@ def index():
         # if guest: return guest_login page
         # if pitt_employee: add or remove from log and return index
         user_input = process_input(request.form['user_input'])
+        # DEBUG in console
+        # print(user_input)
 
         if user_input == 'GUEST':
             return redirect(url_for('guest'))
@@ -169,6 +172,23 @@ def index():
             building_log = sort_log(db)
             return render_template("index.html", title=title, building_log=building_log)
         else:
+            print("Running query")
+            result = query_ws("2P00" + user_input + "*")
+            tree = etree.fromstring(result)
+            pitt_user = [tree[0][6].text, tree[0][2].text, tree[0][4].text]
+
+	    # Check to to see if the user scanned from ID card is logged in
+            # If they are, remove them from the current building log
+            if pitt_user[0] in db:
+                del_log(pitt_user[0], db)
+                pitt_user.append("OUT")
+                write_log(pitt_user, log_file)
+            # Else add the user to the current building log
+            else:
+                add_log(pitt_user[0], pitt_user[1], pitt_user[2], db)
+                pitt_user.append("IN")
+                write_log(pitt_user, log_file)
+
             building_log = sort_log(db)
             return render_template("index.html", title=title, building_log=building_log)
 
