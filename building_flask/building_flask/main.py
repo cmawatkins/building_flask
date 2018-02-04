@@ -139,7 +139,11 @@ def index():
         # Either log user in, out, or add guest
         # if guest: return guest_login page
         # if pitt_employee: add or remove from log and return index
-        pass
+        if request.form['user_input'] == '':
+            return redirect(url_for('guest'))
+        else:
+            flash(request.form['user_login'])
+            return render_template("index.html", title=title, db=db)
 
 if __name__ == "__main__":
     app.run()

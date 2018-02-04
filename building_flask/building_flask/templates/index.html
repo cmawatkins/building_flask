@@ -12,6 +12,7 @@
 </head>
 <body>
     <div id="container">
+        <form id="form" name="form" action="/" method="post"><center>
 		<div id="logo">{{title}}</div>
 		<div id="space"></div>
 		<ul>
@@ -20,10 +21,11 @@
 		{% endfor %}
 		</ul>
 		<div id="space"></div>
-        <form id="form" name="form" action="/" method="post"><center>
+		<div id="form">
 				Swipe Pitt ID card or press Enter for guest
+				<br>
+				<input type="text" name="user_input" onclick="send()">
         </form>        
-        </div>
     </div>     
 </body>
 </html>
