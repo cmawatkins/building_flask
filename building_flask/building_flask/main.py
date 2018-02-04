@@ -106,6 +106,16 @@ def sort_log(db):
 
     return building_log
 
+def process_input(user_input):
+    if len(user_input) == 0:
+        return "GUEST"
+    else:
+        card_number = user_input.split('=')
+        if len(card_number) == 2 and card_number[0].isdigit():
+            return card_number[0][-9:]
+        else:
+            return "ERROR"
+
 @app.route('/guest', methods=['GET', 'POST'])
 def guest():
 
@@ -151,8 +161,13 @@ def index():
         # Either log user in, out, or add guest
         # if guest: return guest_login page
         # if pitt_employee: add or remove from log and return index
-        if request.form['user_input'] == '':
+        user_input = process_input(request.form['user_input'])
+
+        if user_input == 'GUEST':
             return redirect(url_for('guest'))
+        elif user_input == 'ERROR':
+            building_log = sort_log(db)
+            return render_template("index.html", title=title, building_log=building_log)
         else:
             building_log = sort_log(db)
             return render_template("index.html", title=title, building_log=building_log)
