@@ -11,7 +11,7 @@
 #   information for guests, or if you forgot your ID card.
 
 # Import libs
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 import os
 import socket
 import sys
@@ -109,6 +109,19 @@ def sort_log(db):
     building_log.sort(key = lambda x: str(x.split(',')[3][-20:]))
 
     return building_log
+
+@app.route('/guest', methods=['GET', 'POST'])
+def guest():
+
+    # Handle GET reqeust
+    if request.method == 'GET':
+        # Return the HTML page for guest logins
+        return render_template("guest.html", title=title)
+
+    # POST request of user singing in
+    if request.method == 'POST':
+        # Add guest to DB, return index page
+        return redirect(url_for('index'))
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
