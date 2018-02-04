@@ -15,6 +15,8 @@ from flask import Flask, request, render_template, redirect, url_for
 import os
 import socket
 import sys
+import datetime
+import time
 
 app = Flask(__name__)
 
@@ -23,7 +25,7 @@ app.config.from_pyfile('config_file.cfg')
 title = app.config['TITLE']
 server = app.config['API_SERVER']
 call = app.config['API_CALL']
-log_file = app.config['LOG_DIR'] + '/building_access.log'
+log_file = app.config['LOG_DIR'] + 'building_access.log'
 
 # Define the db for user logging
 db = {}
@@ -56,9 +58,6 @@ def add_log(user, first, last, db):
     # Format the time 2013-09-18 11:16:32
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     db[user] = [first, last, now]
-    os.system('clear')
-    print('\x1b[6;30;42m' + user + " logged IN!" + '\x1b[0m')
-    time.sleep(2)
     return True
 
 def del_log(user, db):
@@ -72,9 +71,6 @@ def del_log(user, db):
         True if the delete is successful, False otherwise
     """
     if db.pop(user, False) is not False:
-        os.system('clear')
-        print('\x1b[6;30;42m' + user + " logged OUT!" + '\x1b[0m')
-        time.sleep(2)
         return True
     else:
         return False
@@ -121,6 +117,21 @@ def guest():
     # POST request of user singing in
     if request.method == 'POST':
         # Add guest to DB, return index page
+        first_name = request.form['firstName']
+        last_name = request.form['lastName']
+        username = first_name[0].upper() + last_name.upper()
+
+        guest = [username, first_name, last_name]
+
+        if guest[0] in db:
+            del_log(guest[0], db)
+            guest.append("OUT")
+            write_log(guest, log_file)
+        else:
+            add_log(guest[0], guest[1], guest[2], db)
+            guest.append("IN")
+            write_log(guest, log_file)
+
         return redirect(url_for('index'))
 
 @app.route('/', methods=['GET', 'POST'])
