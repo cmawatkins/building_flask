@@ -18,6 +18,7 @@ import socket
 import sys
 import datetime
 import time
+import requests
 
 app = Flask(__name__)
 
@@ -112,8 +113,8 @@ def process_input(user_input):
         return "GUEST"
     else:
         card_number = user_input.split('=')
-        if len(card_number) == 2 and card_number[0].isdigit():
-            return card_number[0][-9:]
+        if len(card_number) == 2 and card_number[0][1:].isdigit():
+            return card_number[0][-10:]
         else:
             return "ERROR"
 
@@ -163,8 +164,6 @@ def index():
         # if guest: return guest_login page
         # if pitt_employee: add or remove from log and return index
         user_input = process_input(request.form['user_input'])
-        # DEBUG in console
-        # print(user_input)
 
         if user_input == 'GUEST':
             return redirect(url_for('guest'))
@@ -172,7 +171,6 @@ def index():
             building_log = sort_log(db)
             return render_template("index.html", title=title, building_log=building_log)
         else:
-            print("Running query")
             result = query_ws("2P00" + user_input + "*")
             tree = etree.fromstring(result)
             pitt_user = [tree[0][6].text, tree[0][2].text, tree[0][4].text]
