@@ -15,11 +15,32 @@
         <form id="form" name="form" action="/" method="post"><center>
 		<div id="logo">{{title}}</div>
 		<div id="space"></div>
-		<ul>
-		{% for user in building_log %}
-			<li>{{user}}</li>
-		{% endfor %}
-		</ul>
+		<div class="tbl-header">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<thead>
+					<tr>
+						<th>Username</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Date/Time</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="tbl-content">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+				{% for user in building_log %}
+					<tr>
+						<td>{{user[0]}}</td>
+						<td>{{user[1]}}</td>
+						<td>{{user[2]}}</td>
+						<td>{{user[3]}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		<div id="space"></div>
 				Swipe Pitt ID card or press Enter for guest
 				<br>

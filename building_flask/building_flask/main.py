@@ -98,6 +98,7 @@ def write_log(entry, log_file):
 
 def sort_log(db):
     building_log = []
+    users = []
 
     for key, value in db.items():
         user_line = key + "," + ",".join(value)
@@ -106,7 +107,10 @@ def sort_log(db):
     # Sort list based on date/time stamp
     building_log.sort(key = lambda x: str(x.split(',')[3][-20:]))
 
-    return building_log
+    for person in building_log:
+        users.append(person.split(','))
+
+    return users
 
 def process_input(user_input):
     if len(user_input) == 0:
