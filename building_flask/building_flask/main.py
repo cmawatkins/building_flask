@@ -128,9 +128,17 @@ def guest():
 
     # POST request of user singing in
     if request.method == 'POST':
+
+        if request.form['button'] == 'home':
+            return redirect(url_for('index'))
+
         # Add guest to DB, return index page
         first_name = request.form['firstName']
         last_name = request.form['lastName']
+
+        if first_name == '' or last_name == '':
+            return render_template("guest.html", title=title)
+
         username = first_name[0].upper() + last_name.upper()
 
         guest = [username, first_name, last_name]
