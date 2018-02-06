@@ -1,5 +1,5 @@
 body {
-    background-color:#F8F8F8;
+    background-color:#081872;
 }
 
 div#container {
@@ -19,8 +19,9 @@ div#logo {
     margin: 0 auto;
     width: 500px;
     text-align: center;
-    font-size:30px;
+    font-size:50px;
     font-family:Helvetica;
+    color: #baa42a;
     /*border-bottom: 1px solid black;*/
 }
 
@@ -53,7 +54,7 @@ table{
 }
 
 div#tbl-header{
-  background-color: rgba(255,255,255,0.3);
+  background-color: #081872;
 }
 
 div#tbl-content{
@@ -68,7 +69,7 @@ th{
   text-align: left;
   font-weight: 500;
   font-size: 12px;
-  color: #11009E;
+  color: #baa42a;
   text-transform: uppercase;
 }
 
@@ -79,5 +80,6 @@ td{
   font-weight: 300;
   font-size: 12px;
   color: #11009E;
+  background-color: #ffffff;
   border-bottom: solid 1px rgba(255,255,255,0.1);
 }
