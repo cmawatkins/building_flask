@@ -66,6 +66,10 @@ div#container {
     margin-top:5%;
     position: relative;
     z-index: 2;
+    border: 1px solid #baa42a;
+    border-radius: 25px;
+    background-color: #000000;
+    opacity: 80;
 }
 
 div#space {
@@ -117,15 +121,13 @@ table{
 }
 
 div#tbl-header{
-  background-color: #000000;
+	
 }
 
 div#tbl-content{
   height:300px;
   overflow-x:auto;
   margin-top: 0px;
-  border: 1px solid #baa42a;
-  border-radius: 25px;
 }
 
 th{
