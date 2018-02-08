@@ -64,6 +64,8 @@ body {
 
 div#container {
     margin-top:5%;
+    position: relative;
+    z-index: 2;
 }
 
 div#space {
