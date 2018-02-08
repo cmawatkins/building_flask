@@ -9,15 +9,6 @@
         }
     </script>
 
-    <script type="text/javascript">
-		document.getElementById('user_input').onblur = function (event) {
-			var blurEl = this;
-			setTimeout(function() {
-				blurEl.focus()
-			}, 10);
-		};
-	</script>
-
 </head>
 <body>
     <div id="container">
@@ -53,7 +44,7 @@
 		<div id="space"></div>
 		<div id="footer">
 			Swipe Pitt ID card or press Enter for guest<br>
-			<input type="text" name="user_input" id="user_input" autofocus onclick="send()">
+			<input type="text" name="user_input" class="hideme" onblur="this.focus()" autofocus onclick="send()">
 		</div>
         </form>        
     </div>     
