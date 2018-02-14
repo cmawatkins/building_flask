@@ -93,7 +93,7 @@ def write_log(entry, log_file):
     # Format the time 2013-09-18 11:16:32
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     entry = ",".join(entry)
-    log_file.write(now + " " + entry + "\n")
+    log_file.write(now + "," + entry + "\n")
     log_file.close()
 
 def sort_log(db):
