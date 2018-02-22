@@ -185,7 +185,15 @@ def index():
         else:
             result = query_ws("2P00" + user_input + "*")
             tree = etree.fromstring(result)
-            pitt_user = [tree[0][6].text, tree[0][2].text, tree[0][4].text]
+            pitt_user = [None] * 3
+
+            for ele in tree[0]:
+                if ele.tag.find("username") is not -1:
+                    pitt_user[0] = ele.text
+                if ele.tag.find("firstName") is not -1:
+                    pitt_user[1] = ele.text
+                if ele.tag.find("lastName") is not -1:
+                    pitt_user[2] = ele.text
 
 	    # Check to to see if the user scanned from ID card is logged in
             # If they are, remove them from the current building log
