@@ -28,6 +28,7 @@ title = app.config['TITLE']
 server = app.config['API_SERVER']
 call = app.config['API_CALL']
 log_file = app.config['LOG_DIR'] + 'building_access.log'
+swipe_log_file = app.config['LOG_DIR'] + 'swipe.log'
 
 # Define the db for user logging
 db = {}
@@ -114,12 +115,14 @@ def sort_log(db):
 
 def process_input(user_input):
     if len(user_input) == 0:
+        write_log((entry = ["GUEST"]), swipe_log_file)
         return "GUEST"
     else:
         card_number = user_input.split('=')
         if len(card_number) == 2 and card_number[0][1:].isdigit():
             return card_number[0][-10:]
         else:
+            write_log((entry = ["ERROR"]), swipe_log_file)
             return "ERROR"
 
 @app.route('/guest', methods=['GET', 'POST'])
