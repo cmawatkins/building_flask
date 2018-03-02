@@ -48,6 +48,9 @@ def query_ws(card_number):
     tree = etree.fromstring(result)
     pitt_user = [None] * 3
 
+    if len(tree) == 0:
+        return pitt_user
+
     for ele in tree[0]:
         if ele.tag.find("username") is not -1:
             pitt_user[0] = ele.text
@@ -205,6 +208,7 @@ def index():
             pitt_user = query_ws("2P00" + user_input + "*")
             
             if pitt_user[0] is None:
+                building_log = sort_log(db)
                 return render_template("index.html", title=title, building_log=building_log, message="Error with web query!")
 
             # Check to to see if the user scanned from ID card is logged in
