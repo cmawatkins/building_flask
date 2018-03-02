@@ -181,7 +181,7 @@ def index():
             return redirect(url_for('guest'))
         elif user_input == 'ERROR':
             building_log = sort_log(db)
-            return render_template("index.html", title=title, building_log=building_log)
+            return render_template("index.html", title=title, building_log=building_log, message="test1")
         else:
             result = query_ws("2P00" + user_input + "*")
             tree = etree.fromstring(result)
@@ -208,7 +208,7 @@ def index():
                 write_log(pitt_user, log_file)
 
             building_log = sort_log(db)
-            return render_template("index.html", title=title, building_log=building_log)
+            return render_template("index.html", title=title, building_log=building_log, message="test3")
 
 if __name__ == "__main__":
     app.run()
