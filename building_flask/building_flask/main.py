@@ -181,7 +181,7 @@ def index():
             return redirect(url_for('guest'))
         elif user_input == 'ERROR':
             building_log = sort_log(db)
-            return render_template("index.html", title=title, building_log=building_log, message="test1")
+            return render_template("index.html", title=title, building_log=building_log, message="Error reading card")
         else:
             result = query_ws("2P00" + user_input + "*")
             tree = etree.fromstring(result)
@@ -201,14 +201,16 @@ def index():
                 del_log(pitt_user[0], db)
                 pitt_user.append("OUT")
                 write_log(pitt_user, log_file)
+                msg = pitt_user[0] + " logged OUT"
             # Else add the user to the current building log
             else:
                 add_log(pitt_user[0], pitt_user[1], pitt_user[2], db)
                 pitt_user.append("IN")
                 write_log(pitt_user, log_file)
+                msg = pitt_user[0] + " logged IN"
 
             building_log = sort_log(db)
-            return render_template("index.html", title=title, building_log=building_log, message="test3")
+            return render_template("index.html", title=title, building_log=building_log)
 
 if __name__ == "__main__":
     app.run()
