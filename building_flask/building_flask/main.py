@@ -121,6 +121,8 @@ def process_input(user_input):
     else:
         card_number = user_input.split('=')
         if len(card_number) == 2 and card_number[0][1:].isdigit():
+            entry = [user_input]
+            write_log(entry, swipe_log_file)
             return card_number[0][-10:]
         else:
             entry = ["ERROR"]
