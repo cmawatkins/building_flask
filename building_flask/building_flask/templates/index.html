@@ -5,12 +5,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+	{% if message is defined %}
 	<script>
 		$(function () {
 			var msg = '{{ message }}';
 			toastr.info(msg);
 		});
 	</script>
+	{% endif %}
 
 
     <title>{{title}}</title>
