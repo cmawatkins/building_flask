@@ -217,7 +217,7 @@ def index():
                 msg = pitt_user[0] + " logged IN"
 
             building_log = sort_log(db)
-            return render_template("index.html", title=title, building_log=building_log)
+            return render_template("index.html", title=title, building_log=building_log, message=msg)
 
 if __name__ == "__main__":
     app.run()
