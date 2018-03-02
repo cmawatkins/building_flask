@@ -9,12 +9,28 @@
 	{% if message is defined %}
 	<script>
 		$(function () {
+			toastr.options = {
+				"positionClass": "toast-bottom-full-width"
+			}
+
 			var msg = '{{ message }}';
 			toastr.info(msg);
 		});
 	</script>
 	{% endif %}
 
+	<script>
+		var height = 0;
+
+		$('td').each(function(i, value){
+			height += parseInt($(this).height());
+		});
+
+		height += '';
+
+		$('#tbl-content').animate({scrollTop: height});
+
+	</script>
 
     <title>{{title}}</title>
 
