@@ -115,14 +115,16 @@ def sort_log(db):
 
 def process_input(user_input):
     if len(user_input) == 0:
-        write_log((entry = ["GUEST"]), swipe_log_file)
+        entry = ["GUEST"]
+        write_log(entry, swipe_log_file)
         return "GUEST"
     else:
         card_number = user_input.split('=')
         if len(card_number) == 2 and card_number[0][1:].isdigit():
             return card_number[0][-10:]
         else:
-            write_log((entry = ["ERROR"]), swipe_log_file)
+            entry = ["ERROR"]
+            write_log(entry, swipe_log_file)
             return "ERROR"
 
 @app.route('/guest', methods=['GET', 'POST'])
