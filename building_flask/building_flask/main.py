@@ -44,7 +44,19 @@ def query_ws(card_number):
     """
     payload = {'search': card_number, 'signon': ''}
     result = requests.get('https://' + server + '/' + call, params=payload)
-    return result.content
+    result = result.content
+    tree = etree.fromstring(result)
+    pitt_user = [None] * 3
+
+    for ele in tree[0]:
+        if ele.tag.find("username") is not -1:
+            pitt_user[0] = ele.text
+        if ele.tag.find("firstName") is not -1:
+            pitt_user[1] = ele.text
+        if ele.tag.find("lastName") is not -1:
+            pitt_user[2] = ele.text
+
+    return pitt_user
 
 def add_log(user, first, last, db):
     """Add record to current building access log
@@ -190,19 +202,12 @@ def index():
             building_log = sort_log(db)
             return render_template("index.html", title=title, building_log=building_log, message="Error reading card")
         else:
-            result = query_ws("2P00" + user_input + "*")
-            tree = etree.fromstring(result)
-            pitt_user = [None] * 3
+            pitt_user = query_ws("2P00" + user_input + "*")
+            
+            if pitt_user[0] is None:
+                return render_template("index.html", title=title, building_log=building_log, message="Error with web query!")
 
-            for ele in tree[0]:
-                if ele.tag.find("username") is not -1:
-                    pitt_user[0] = ele.text
-                if ele.tag.find("firstName") is not -1:
-                    pitt_user[1] = ele.text
-                if ele.tag.find("lastName") is not -1:
-                    pitt_user[2] = ele.text
-
-	    # Check to to see if the user scanned from ID card is logged in
+            # Check to to see if the user scanned from ID card is logged in
             # If they are, remove them from the current building log
             if pitt_user[0] in db:
                 del_log(pitt_user[0], db)
