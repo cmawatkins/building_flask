@@ -6,6 +6,19 @@
 	<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+	{% if error is defined %}
+	<script>
+		$(function () {
+			toastr.options = {
+				"positionClass": "toast-bottom-full-width"
+			}
+
+			var msg = '{{ error }}';
+			toastr.error(msg);
+		});
+	</script>
+	{% endif %}
+
 	{% if message is defined %}
 	<script>
 		$(function () {
@@ -14,7 +27,7 @@
 			}
 
 			var msg = '{{ message }}';
-			toastr.info(msg);
+			toastr.success(msg);
 		});
 	</script>
 	{% endif %}

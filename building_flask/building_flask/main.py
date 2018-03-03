@@ -203,13 +203,13 @@ def index():
             return redirect(url_for('guest'))
         elif user_input == 'ERROR':
             building_log = sort_log(db)
-            return render_template("index.html", title=title, building_log=building_log, message="Error reading card")
+            return render_template("index.html", title=title, building_log=building_log, error="Error reading card")
         else:
             pitt_user = query_ws("2P00" + user_input + "*")
             
             if pitt_user[0] is None:
                 building_log = sort_log(db)
-                return render_template("index.html", title=title, building_log=building_log, message="Error with web query!")
+                return render_template("index.html", title=title, building_log=building_log, error="Error with web query!")
 
             # Check to to see if the user scanned from ID card is logged in
             # If they are, remove them from the current building log
