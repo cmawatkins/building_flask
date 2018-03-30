@@ -121,7 +121,7 @@ def sort_log(db):
         building_log.append(user_line)
 
     # Sort list based on date/time stamp
-    building_log.sort(key = lambda x: str(x.split(',')[3][-20:]))
+    building_log.sort(key = lambda x: str(x.split(',')[3][-20:]), reverse=True)
 
     for person in building_log:
         users.append(person.split(','))
