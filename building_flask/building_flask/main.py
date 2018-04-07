@@ -218,15 +218,17 @@ def index():
                 pitt_user.append("OUT")
                 write_log(pitt_user, log_file)
                 msg = pitt_user[0] + " logged OUT"
+                building_log = sort_log(db)
+                return render_template("index.html", title=title, building_log=building_log, info=msg)
+
             # Else add the user to the current building log
             else:
                 add_log(pitt_user[0], pitt_user[1], pitt_user[2], db)
                 pitt_user.append("IN")
                 write_log(pitt_user, log_file)
                 msg = pitt_user[0] + " logged IN"
-
-            building_log = sort_log(db)
-            return render_template("index.html", title=title, building_log=building_log, message=msg)
+                building_log = sort_log(db)
+                return render_template("index.html", title=title, building_log=building_log, message=msg)
 
 if __name__ == "__main__":
     app.run()

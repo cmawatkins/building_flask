@@ -32,6 +32,19 @@
 	</script>
 	{% endif %}
 
+	{% if info is defined %}
+	<script>
+		$(function () {
+			toastr.options = {
+				"positionClass": "toast-bottom-full-width"
+			}
+
+			var msg = '{{ info }}';
+			toastr.info(msg);
+		});
+	</script>
+	{% endif %}
+
 	<script>
 		var height = 0;
 
