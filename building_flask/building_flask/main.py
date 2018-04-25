@@ -32,11 +32,11 @@ log_file = app.config['LOG_DIR'] + 'building_access.log'
 swipe_log_file = app.config['LOG_DIR'] + 'swipe.log'
 
 # Redis configurations
-redis_server = os.environment['REDIS']
+redis_server = os.environ['REDIS']
 
 # Redis connection
 try:
-    if "REDIS_PWD" in os.environment:
+    if "REDIS_PWD" in os.environ:
         db = redis.StrictRedis(host=redis_server, port=6379, password=os.environ['REDIS_PWD'])
     else:
         db = redis.Redis(redis_server)
