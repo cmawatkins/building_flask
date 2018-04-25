@@ -86,8 +86,7 @@ def add_log(user, first, last, db):
     """
     # Format the time 2013-09-18 11:16:32
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    db[user] = [first, last, now]
-    return True
+    return db.set(user, [first, last, now])
 
 def del_log(user, db):
     """Delete record from the current building access log
@@ -99,10 +98,7 @@ def del_log(user, db):
     Return:
         True if the delete is successful, False otherwise
     """
-    if db.pop(user, False) is not False:
-        return True
-    else:
-        return False
+    return db.delete(user)
 
 def write_log(entry, log_file):
     """Write add/del entry to log file
