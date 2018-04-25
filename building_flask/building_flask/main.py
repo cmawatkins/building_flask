@@ -1,8 +1,8 @@
-# Title: building_login.py
+# Title: main.py
 #
 # Author: Troy <twc17@pitt.edu>
-# Date Modified: 02/03/2018
-# Version: 1.0.0
+# Date Modified: 04/25/2018
+# Version: 2.0.0
 #
 # Purpose:
 #   This is a program for a building access log book. It uses a magnetic card reader to grab
@@ -37,15 +37,12 @@ redis_server = os.environment['REDIS']
 # Redis connection
 try:
     if "REDIS_PWD" in os.environment:
-        r = redis.StrictRedis(host=redis_server, port=6379, password=os.environ['REDIS_PWD'])
+        db = redis.StrictRedis(host=redis_server, port=6379, password=os.environ['REDIS_PWD'])
     else:
-        r = redis.Redis(redis_server)
-    r.ping()
+        db = redis.Redis(redis_server)
+    db.ping()
 except redis.ConnectionError:
     exit('Failed to connect to Redis, terminating!')
-
-# Define the db for user logging
-db = {}
 
 def query_ws(card_number):
     """Query Pitt web services (maybe?) server for users 2P number
