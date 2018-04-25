@@ -123,8 +123,8 @@ def sort_log(db):
     building_log = []
     users = []
 
-    for key, value in db.items():
-        user_line = key + "," + ",".join(value)
+    for key in db.keys():
+        user_line = key + "," + ",".join(db.get(key))
         building_log.append(user_line)
 
     # Sort list based on date/time stamp
