@@ -176,7 +176,7 @@ def guest():
 
         guest = [username, first_name, last_name]
 
-        if guest[0] in db:
+        if db.get(guest[0]) is not None:
             del_log(guest[0], db)
             guest.append("OUT")
             write_log(guest, log_file)
@@ -220,7 +220,7 @@ def index():
 
             # Check to to see if the user scanned from ID card is logged in
             # If they are, remove them from the current building log
-            if pitt_user[0] in db:
+            if db.get(pitt_user[0]) is not None:
                 del_log(pitt_user[0], db)
                 pitt_user.append("OUT")
                 write_log(pitt_user, log_file)
