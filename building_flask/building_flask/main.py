@@ -86,7 +86,7 @@ def add_log(user, first, last, db):
     """
     # Format the time 2013-09-18 11:16:32
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    return db.set(user, [first, last, now])
+    return db.lpush(user, *[first, last, now])
 
 def del_log(user, db):
     """Delete record from the current building access log
