@@ -1,0 +1,15 @@
+version: '1'
+services:
+    building-login-back:
+        image: redis
+        container_name: building-login-back
+        ports:
+            - "6379:6379"
+
+    building-login-front:
+        image: building-login
+        container_name: building-login-front
+        environment:
+            REDIS: building-login-back
+        ports:
+            - "8080:80"
