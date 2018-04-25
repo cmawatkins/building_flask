@@ -19,6 +19,7 @@ import sys
 import datetime
 import time
 import requests
+import redis
 
 app = Flask(__name__)
 
@@ -29,6 +30,19 @@ server = app.config['API_SERVER']
 call = app.config['API_CALL']
 log_file = app.config['LOG_DIR'] + 'building_access.log'
 swipe_log_file = app.config['LOG_DIR'] + 'swipe.log'
+
+# Redis configurations
+redis_server = os.environment['REDIS']
+
+# Redis connection
+try:
+    if "REDIS_PWD" in os.environment:
+        r = redis.StrictRedis(host=redis_server, port=6379, password=os.environ['REDIS_PWD'])
+    else:
+        r = redis.Redis(redis_server)
+    r.ping()
+except redis.ConnectionError:
+    exit('Failed to connect to Redis, terminating!')
 
 # Define the db for user logging
 db = {}
