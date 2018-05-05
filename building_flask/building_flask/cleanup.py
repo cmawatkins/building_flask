@@ -45,9 +45,9 @@ def main():
     for key in db.keys():
         key = key.decode('utf-8')
         data = db.lrange(key, 0, -1)
-        user_line = [key, data[0].decode('utf-8'), data[1].decode('utf-8'), data[2].decode('utf-8')]
+        user_line = [key, data[0].decode('utf-8'), data[1].decode('utf-8')]
 
-        if compare_time(now, user_line[3]) > TIMEOUT:
+        if compare_time(now, data[2].decode('utf-8')) > TIMEOUT:
             del_log(key, db)
             user_line.append("OUT (AUTO)")
             write_log(user_line, log_file)
