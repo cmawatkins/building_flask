@@ -86,7 +86,7 @@ def add_log(user, first, last, db):
     """
     # Format the time 2013-09-18 11:16:32
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    return db.lpush(user, *[first, last, now])
+    return db.lpush(user, *[now, last, first])
 
 def del_log(user, db):
     """Delete record from the current building access log
@@ -124,7 +124,10 @@ def sort_log(db):
     users = []
 
     for key in db.keys():
-        user_line = key + "," + ",".join(db.get(key))
+        key = key.decode('utf-8')
+        data = db.lrange(key, 0, -1)
+        bytedata = b','.join(data)
+        user_line = key + "," + bytedata.decode('utf-8')
         building_log.append(user_line)
 
     # Sort list based on date/time stamp
@@ -176,7 +179,7 @@ def guest():
 
         guest = [username, first_name, last_name]
 
-        if db.get(guest[0]) is not None:
+        if db.exists(guest[0]) == 1:
             del_log(guest[0], db)
             guest.append("OUT")
             write_log(guest, log_file)
@@ -220,7 +223,7 @@ def index():
 
             # Check to to see if the user scanned from ID card is logged in
             # If they are, remove them from the current building log
-            if db.get(pitt_user[0]) is not None:
+            if db.exists(pitt_user[0]) == 1:
                 del_log(pitt_user[0], db)
                 pitt_user.append("OUT")
                 write_log(pitt_user, log_file)
