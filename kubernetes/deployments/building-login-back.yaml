@@ -1,0 +1,16 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+    name: building-login-back
+spec:
+    template:
+        metadata:
+            labels:
+                app: building-login-back
+        spec:
+            containers:
+                - name: building-login-back
+                  image: redis
+                  ports:
+                      - containerPort: 6379
+                        name: redis
