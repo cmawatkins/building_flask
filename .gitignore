@@ -1,3 +1,5 @@
 *.cfg
 *.log*
+*.rdb
+*.aof
 __pycache__

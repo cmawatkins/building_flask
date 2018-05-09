@@ -1,8 +1,8 @@
-# Title: building_login.py
+# Title: main.py
 #
 # Author: Troy <twc17@pitt.edu>
-# Date Modified: 02/03/2018
-# Version: 1.0.0
+# Date Modified: 04/25/2018
+# Version: 2.0.0
 #
 # Purpose:
 #   This is a program for a building access log book. It uses a magnetic card reader to grab
@@ -19,6 +19,7 @@ import sys
 import datetime
 import time
 import requests
+import redis
 
 app = Flask(__name__)
 
@@ -30,8 +31,18 @@ call = app.config['API_CALL']
 log_file = app.config['LOG_DIR'] + 'building_access.log'
 swipe_log_file = app.config['LOG_DIR'] + 'swipe.log'
 
-# Define the db for user logging
-db = {}
+# Redis configurations
+redis_server = os.environ['REDIS']
+
+# Redis connection
+try:
+    if "REDIS_PWD" in os.environ:
+        db = redis.StrictRedis(host=redis_server, port=6379, password=os.environ['REDIS_PWD'])
+    else:
+        db = redis.Redis(redis_server)
+    db.ping()
+except redis.ConnectionError:
+    exit('Failed to connect to Redis, terminating!')
 
 def query_ws(card_number):
     """Query Pitt web services (maybe?) server for users 2P number
@@ -75,8 +86,7 @@ def add_log(user, first, last, db):
     """
     # Format the time 2013-09-18 11:16:32
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    db[user] = [first, last, now]
-    return True
+    return db.lpush(user, *[now, last, first])
 
 def del_log(user, db):
     """Delete record from the current building access log
@@ -88,10 +98,7 @@ def del_log(user, db):
     Return:
         True if the delete is successful, False otherwise
     """
-    if db.pop(user, False) is not False:
-        return True
-    else:
-        return False
+    return db.delete(user)
 
 def write_log(entry, log_file):
     """Write add/del entry to log file
@@ -116,8 +123,11 @@ def sort_log(db):
     building_log = []
     users = []
 
-    for key, value in db.items():
-        user_line = key + "," + ",".join(value)
+    for key in db.keys():
+        key = key.decode('utf-8')
+        data = db.lrange(key, 0, -1)
+        bytedata = b','.join(data)
+        user_line = key + "," + bytedata.decode('utf-8')
         building_log.append(user_line)
 
     # Sort list based on date/time stamp
@@ -169,7 +179,7 @@ def guest():
 
         guest = [username, first_name, last_name]
 
-        if guest[0] in db:
+        if db.exists(guest[0]) == 1:
             del_log(guest[0], db)
             guest.append("OUT")
             write_log(guest, log_file)
@@ -213,7 +223,7 @@ def index():
 
             # Check to to see if the user scanned from ID card is logged in
             # If they are, remove them from the current building log
-            if pitt_user[0] in db:
+            if db.exists(pitt_user[0]) == 1:
                 del_log(pitt_user[0], db)
                 pitt_user.append("OUT")
                 write_log(pitt_user, log_file)

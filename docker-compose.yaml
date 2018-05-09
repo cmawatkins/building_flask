@@ -1,0 +1,21 @@
+version: '3'
+services:
+    building-login-back:
+        image: redis
+        container_name: building-login-back
+        command: redis-server --appendonly yes
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./redis_data:/data
+
+    building-login-front:
+        build: ./building_flask
+        image: building-login
+        container_name: building-login-front
+        environment:
+            REDIS: building-login-back
+        ports:
+            - "8080:80"
+        volumes:
+            - ./building_logs:/building_logs
