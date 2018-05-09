@@ -18,12 +18,12 @@ spec:
                   image: pittcontainerreg.azurecr.io/building-login:redis-v1
                   ports:
                       - containerPort: 80
-                      resources:
-                          requests:
-                              cpu: 250m
-                          limits:
-                              cpu: 500m
-                      env:
+                        resources:
+                            requests:
+                                cpu: 250m
+                            limits:
+                                cpu: 500m
+                        env:
                           - name: REDIS
                             value: "building-login-front"
 
