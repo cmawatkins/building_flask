@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: building-login-front
 spec:
+  replicas: 1
   strategy:
     rollingUpdate: 1
       maxSurge: 1
