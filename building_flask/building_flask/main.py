@@ -72,13 +72,14 @@ def query_ws(card_number):
 
     return pitt_user
 
-def add_log(user, first, last, db):
+def add_log(user, first, last, company, db):
     """Add record to current building access log
 
     Arguments:
         user -- Pitt Username
         first -- First name
         last -- Last name
+        company -- Company name
         db -- Database of current building log
 
     Returns:
@@ -131,7 +132,7 @@ def sort_log(db):
         building_log.append(user_line)
 
     # Sort list based on date/time stamp
-    building_log.sort(key = lambda x: str(x.split(',')[3][-20:]), reverse=True)
+    building_log.sort(key = lambda x: str(x.split(',')[4][-20:]), reverse=True)
 
     for person in building_log:
         users.append(person.split(','))
@@ -171,13 +172,14 @@ def guest():
         # Add guest to DB, return index page
         first_name = request.form['firstName']
         last_name = request.form['lastName']
+        company = request.form['company']
 
         if first_name == '' or last_name == '':
             return render_template("guest.html", title=title)
 
         username = first_name[0].upper() + last_name.upper()
 
-        guest = [username, first_name, last_name]
+        guest = [username, first_name, last_name, company]
 
         if db.exists(guest[0]) == 1:
             del_log(guest[0], db)
