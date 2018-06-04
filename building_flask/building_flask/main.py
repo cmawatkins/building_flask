@@ -70,15 +70,17 @@ def query_ws(card_number):
         if ele.tag.find("lastName") is not -1:
             pitt_user[2] = ele.text
 
+    pitt_user.append("PITT")
     return pitt_user
 
-def add_log(user, first, last, db):
+def add_log(user, first, last, company, db):
     """Add record to current building access log
 
     Arguments:
         user -- Pitt Username
         first -- First name
         last -- Last name
+        company -- Company name
         db -- Database of current building log
 
     Returns:
@@ -86,7 +88,7 @@ def add_log(user, first, last, db):
     """
     # Format the time 2013-09-18 11:16:32
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    return db.lpush(user, *[now, last, first])
+    return db.lpush(user, *[now, company, last, first])
 
 def del_log(user, db):
     """Delete record from the current building access log
@@ -131,7 +133,7 @@ def sort_log(db):
         building_log.append(user_line)
 
     # Sort list based on date/time stamp
-    building_log.sort(key = lambda x: str(x.split(',')[3][-20:]), reverse=True)
+    building_log.sort(key = lambda x: str(x.split(',')[4][-20:]), reverse=True)
 
     for person in building_log:
         users.append(person.split(','))
@@ -171,20 +173,21 @@ def guest():
         # Add guest to DB, return index page
         first_name = request.form['firstName']
         last_name = request.form['lastName']
+        company = request.form['company']
 
         if first_name == '' or last_name == '':
             return render_template("guest.html", title=title)
 
         username = first_name[0].upper() + last_name.upper()
 
-        guest = [username, first_name, last_name]
+        guest = [username, first_name, last_name, company]
 
         if db.exists(guest[0]) == 1:
             del_log(guest[0], db)
             guest.append("OUT")
             write_log(guest, log_file)
         else:
-            add_log(guest[0], guest[1], guest[2], db)
+            add_log(guest[0], guest[1], guest[2], guest[3], db)
             guest.append("IN")
             write_log(guest, log_file)
 
@@ -233,7 +236,7 @@ def index():
 
             # Else add the user to the current building log
             else:
-                add_log(pitt_user[0], pitt_user[1], pitt_user[2], db)
+                add_log(pitt_user[0], pitt_user[1], pitt_user[2], pitt_user[3], db)
                 pitt_user.append("IN")
                 write_log(pitt_user, log_file)
                 msg = pitt_user[0] + " logged IN"
