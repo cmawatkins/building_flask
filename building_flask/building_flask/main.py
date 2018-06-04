@@ -70,6 +70,7 @@ def query_ws(card_number):
         if ele.tag.find("lastName") is not -1:
             pitt_user[2] = ele.text
 
+    pitt_user.append("PITT")
     return pitt_user
 
 def add_log(user, first, last, company, db):
@@ -235,7 +236,7 @@ def index():
 
             # Else add the user to the current building log
             else:
-                add_log(pitt_user[0], pitt_user[1], pitt_user[2], db)
+                add_log(pitt_user[0], pitt_user[1], pitt_user[2], pitt_user[3], db)
                 pitt_user.append("IN")
                 write_log(pitt_user, log_file)
                 msg = pitt_user[0] + " logged IN"
