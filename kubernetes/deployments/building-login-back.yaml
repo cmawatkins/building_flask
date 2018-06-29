@@ -17,6 +17,7 @@ spec:
                   ports:
                       - containerPort: 6379
                         name: redis
+                  command: ["redis-server --appendonly yes"]
             volumes:
                 - name: redis-data
                   persistentVolumeClaim:
