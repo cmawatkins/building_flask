@@ -11,6 +11,13 @@ spec:
             containers:
                 - name: building-login-back
                   image: redis
+                  volumeMounts:
+                      - name: redis-data
+                        mountPath: /data
                   ports:
                       - containerPort: 6379
                         name: redis
+            volumes:
+                - name: redis-data
+                  persistentVolumeClaim:
+                      claimName: azurefile

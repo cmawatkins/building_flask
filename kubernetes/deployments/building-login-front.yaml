@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: building-login-front
-        image: pittcontainerreg.azurecr.io/building-login:v7
+        image: pittcontainerreg.azurecr.io/building-login:v10
         volumeMounts:
         - name: building-logs
           mountPath: /building_logs
@@ -31,4 +31,5 @@ spec:
           value: "building-login-back"
       volumes:
       - name: building-logs
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: azurefile
