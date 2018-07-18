@@ -18,6 +18,11 @@ node {
     
     stage "Push"
 
+		withCredentials([usernamePassword(credentialsId: 'amazon', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+			sh "docker login pittcontainerreg.azurecr.io -u $USERNAME -p $PASSWORD"
+			sh "docker push ${imageName}"
+		}
+
 
     stage "Deliver"
 
