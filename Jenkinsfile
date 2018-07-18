@@ -18,10 +18,7 @@ node {
     
     stage "Push"
 
-        sh "docker push ${imageName}"
 
     stage "Deploy"
 
-        sh "sed 's#pittcontainerreg.azurecr.io/building-login:latest#'$BUILDIMG'#' kubernetes/deployments/building-login-front.yaml | kubectl apply -f -"
-        sh "kubectl rollout status deployment/building-login-front"
 }
