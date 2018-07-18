@@ -19,6 +19,6 @@ node {
     stage "Push"
 
 
-    stage "Deploy"
+    stage "Deliver"
 
 }
