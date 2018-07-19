@@ -42,7 +42,7 @@ node {
 		  template:
 		    spec:
 		      containers:
-		        - name: building-login-front
+		        \- name: building-login-front
 		          image: pittcontainerreg.azurecr.io/${imageName}
 		EOF
 
