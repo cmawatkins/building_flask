@@ -29,7 +29,7 @@ node {
     	git config --global user.email "twc17@pitt.edu"
     	git config --global user.name "Jenkins Automation"
 
-		git clone https://github.com/twc17/k8s-infrastructure.git
+		git clone "https://github.com/twc17/k8s-infrastructure.git"
 
     	cd k8s-infrastructure
 		
