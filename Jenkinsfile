@@ -5,7 +5,7 @@ pipeline {
 
 		stage('Build') {
 			steps {
-				echo 'Build'
+				echo 'Build test from laptop '
 			}
 		}
 		
