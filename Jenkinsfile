@@ -4,7 +4,7 @@ node {
 
     env.DOCKER_API_VERSION="1.23"
     
-    git rev-parse --short HEAD > commit-id
+    'git rev-parse --short HEAD > commit-id'
 
     tag = readFile('commit-id').replace("\n", "").replace("\r", "")
     appName = "building-login"
