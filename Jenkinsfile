@@ -12,19 +12,23 @@ node {
     imageName = "${registryHost}${appName}:${tag}"
     env.BUILDIMG=imageName
 
-    stage "Build"
-    
+    stage "Build" {
+
         sh "docker build -t ${imageName} -f building_flask/Dockerfile building_flask"
+
+	}
     
-    stage "Push"
+    stage "Push" {
 
 		withCredentials([usernamePassword(credentialsId: 'azure_acr', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 			sh "docker login pittcontainerreg.azurecr.io -u $USERNAME -p $PASSWORD"
 			sh "docker push ${imageName}"
 		}
 
+	}
 
-    stage "Deliver"
+
+    stage "Deliver" {
 
     	git config --global user.email "twc17@pitt.edu"
     	git config --global user.name "Jenkins Automation"
@@ -57,5 +61,7 @@ node {
 		EOF
 
 		git push origin master
+
+	}
 		
 }
