@@ -48,9 +48,9 @@ pipeline {
 						image: pittcontainerreg.azurecr.io/${imageName}
 				EOF
 
-				kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml
+				sh 'kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml'
 
-				mv output.yaml apps/building-login/deployments/building-login-front.yaml
+				sh 'mv output.yaml apps/building-login/deployments/building-login-front.yaml'
 
 				git add apps/building-login/deployments/building-login-front.yaml
 
