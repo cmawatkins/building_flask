@@ -52,7 +52,7 @@ node {
 
 		sh 'git add apps/building-login/deployments/building-login-front.yaml'
 
-		git commit -F- <<EOF
+		'git commit -F- <<EOF'
 		Update the building-login application
 
 		This commit updates the building-login-front deployment container image to:
