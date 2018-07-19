@@ -31,7 +31,7 @@ node {
 
 		'git clone "https://github.com/twc17/k8s-infrastructure.git"'
 
-    	sh 'cd k8s-infrastructure'
+    	'cd k8s-infrastructure'
 		
 		cat <<EOF > patch.yaml
 		spec:
