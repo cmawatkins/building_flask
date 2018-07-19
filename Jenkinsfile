@@ -38,17 +38,17 @@ node {
 		  template:
 		    spec:
 		      containers:
-		        - name: building-login-front
+		        '- name: building-login-front'
 		          image: pittcontainerreg.azurecr.io/${imageName}
 		EOF
 
-		kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml
+		sh 'kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml'
 
 		mv output.yaml apps/building-login/deployments/building-login-front.yaml
 
 		git add apps/building-login/deployments/building-login-front.yaml
 
-		git commit -F- <<EOF
+		'git commit -F- <<EOF'
 		Update the building-login application
 
 		This commit updates the building-login-front deployment container image to:
