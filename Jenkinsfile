@@ -33,14 +33,14 @@ node {
 
     	'cd k8s-infrastructure'
 		
-		cat <<EOF > patch.yaml
+		'cat <<EOF > patch.yaml
 		spec:
 		  template:
 		    spec:
 		      containers:
 		        '- name: building-login-front'
 		          image: pittcontainerreg.azurecr.io/${imageName}
-		EOF
+		EOF'
 
 		sh 'kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml'
 
