@@ -52,7 +52,7 @@ pipeline {
 
 				sh 'mv output.yaml apps/building-login/deployments/building-login-front.yaml'
 
-				git add apps/building-login/deployments/building-login-front.yaml
+				sh 'git add apps/building-login/deployments/building-login-front.yaml'
 
 				git commit -F- <<EOF
 				Update the building-login application
