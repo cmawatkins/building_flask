@@ -46,6 +46,5 @@ This commit updates the building-login-front deployment container image to:
 	${imageName}"""
 		sh 'git config --global credential.https://github.com.helper /var/jenkins_home/hub-credential-helper'
 		sh 'git push origin master'
-		}
 	}
 }
