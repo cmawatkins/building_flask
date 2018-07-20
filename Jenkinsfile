@@ -21,9 +21,10 @@ node {
 	}
 
 	stage('Deliver') {
+		gitRepo = "https://github.com/twc17/k8s-infrastructure"
 		sh 'git config --global user.email "twc17@pitt.edu"'
 		sh 'git config --global user.name "Jenkins Automation"'
-		git "https://github.com/twc17/k8s-infrastructure"
+		git ${gitRepo}
 		sh """
 		cat <<EOF > patch.yaml
 spec:
@@ -44,6 +45,8 @@ This commit updates the building-login-front deployment container image to:
 
 	${imageName}"""
 		
-		sh 'git push origin master'
+		withCredentials([usernamePassword(credentialsId: 'git-pass', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+			sh 'git push https://${USERNAME}:${PASSWORD}@${gitRepo}'
+		}
 	}
 }
