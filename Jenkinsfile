@@ -25,12 +25,12 @@ node {
 		git "https://github.com/twc17/k8s-infrastructure"
 		sh """
 		cat <<EOF > patch.yaml
-		spec:
-		  template:
-		    spec:
-		      containers:
-		        - name: building-login-front
-		          image: ${imageName}"""
+spec:
+  template:
+    spec:
+      containers:
+        - name: building-login-front
+          image: ${imageName}"""
 		
 		sh 'kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml'
 	}
