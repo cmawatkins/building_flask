@@ -46,7 +46,7 @@ This commit updates the building-login-front deployment container image to:
 	${imageName}"""
 		
 		withCredentials([usernamePassword(credentialsId: 'git-push', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-			sh 'git push https://${USERNAME}:${PASSWORD}@${gitRepo}'
+			sh 'git push https://${USERNAME}:${PASSWORD}@<gitRepo>'
 		}
 	}
 }
