@@ -21,7 +21,8 @@ node {
 	}
 
 	stage('Deliver') {
-		echo("Deliver")
+		sh 'git config --global user.email "twc17@pitt.edu"'
+		sh 'git config --global user.name "Jenkins Automation"'
 		git "https://github.com/twc17/k8s-infrastructure"
 		sh """
 		cat <<EOF > patch.yaml
@@ -33,5 +34,6 @@ spec:
           image: ${imageName}"""
 		
 		sh 'kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml'
+		sh 'mv output.yaml apps/building-login/deployments/building-login-front.yaml'
 	}
 }
