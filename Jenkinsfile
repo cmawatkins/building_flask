@@ -23,6 +23,15 @@ node {
 	stage('Deliver') {
 		echo("Deliver")
 		git "https://github.com/twc17/k8s-infrastructure"
-		echo(pwd())
+		sh """
+		cat <<EOF > patch.yaml
+		spec:
+		  template:
+		    spec:
+		      containers:
+		        - name: building-login-front
+		          image: ${imageName}
+		EOF
+		"""
 	}
 }
