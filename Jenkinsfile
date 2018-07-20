@@ -30,7 +30,6 @@ node {
 		    spec:
 		      containers:
 		        - name: building-login-front
-		          image: ${imageName}
-		"""
+		          image: ${imageName}"""
 	}
 }
