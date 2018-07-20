@@ -2,7 +2,7 @@ node {
 	
 	checkout scm
 
-	'git rev-parse --short HEAD > commit-id'
+	sh "git rev-parse --short HEAD > commit-id"
 
 	tag = readFile('commit-id').replace("\n", "").replace("r", "")
 	appName = "building-login"
