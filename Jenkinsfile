@@ -31,5 +31,7 @@ node {
 		      containers:
 		        - name: building-login-front
 		          image: ${imageName}"""
+		
+		sh """kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml"""
 	}
 }
