@@ -24,7 +24,7 @@ node {
 		gitRepo = "https://github.com/twc17/k8s-infrastructure"
 		sh 'git config --global user.email "twc17@pitt.edu"'
 		sh 'git config --global user.name "Jenkins Automation"'
-		git ${gitRepo}
+		git "${gitRepo}"
 		sh """
 		cat <<EOF > patch.yaml
 spec:
