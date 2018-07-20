@@ -44,9 +44,7 @@ Update the building-login application
 This commit updates the building-login-front deployment container image to:
 
 	${imageName}"""
-		
-		withCredentials([usernamePassword(credentialsId: 'git-push', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-			sh 'git push https://${USERNAME}:${PASSWORD}@github.com/twc17/k8s-infrastructure.git'
+		sh 'git push origin master'
 		}
 	}
 }
