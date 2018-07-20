@@ -23,5 +23,6 @@ node {
 	stage('Deliver') {
 		echo("Deliver")
 		git "https://github.com/twc17/k8s-infrastructure"
+		pwd
 	}
 }
