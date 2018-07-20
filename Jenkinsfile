@@ -35,5 +35,13 @@ spec:
 		
 		sh 'kubectl patch --local -o yaml -f apps/building-login/deployments/building-login-front.yaml -p "$(cat patch.yaml)" > output.yaml'
 		sh 'mv output.yaml apps/building-login/deployments/building-login-front.yaml'
+		sh 'git add apps/building-login/deployments/building-login-front.yaml'
+		sh """
+		git commit -F- <<EOF
+Update the building-login application
+
+This commit updates the building-login-front deployment container image to:
+
+	${imageName}"""
 	}
 }
