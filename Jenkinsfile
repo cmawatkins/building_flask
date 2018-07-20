@@ -45,6 +45,5 @@ This commit updates the building-login-front deployment container image to:
 
 	${imageName}"""
 		sh 'git push origin master'
-		}
 	}
 }
