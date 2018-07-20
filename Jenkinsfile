@@ -44,11 +44,8 @@ Update the building-login application
 This commit updates the building-login-front deployment container image to:
 
 	${imageName}"""
-		
-		withCredentials([usernamePassword(credentialsId: 'git-push', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-			sh 'git config --global credentials.https://github.com.username ${USERNAME}'
-			sh 'git config --global credentials.https://github.com.password ${PASSWORD}'
-			sh 'git push origin master'
+		sh 'git config --global credential.https://github.com.helper /var/jenkins_home/hub-credential-helper'
+		sh 'git push origin master'
 		}
 	}
 }
